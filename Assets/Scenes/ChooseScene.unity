@@ -1607,6 +1607,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 329939917}
   image: {fileID: 159390331}
+  panel: {fileID: 258726356}
 --- !u!1 &735868756
 GameObject:
   m_ObjectHideFlags: 0
