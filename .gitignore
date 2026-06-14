@@ -1,0 +1,66 @@
+# =============== #
+#   Unity 缓存与临时文件  #
+# =============== #
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Build]/
+/[Builds]/
+/[Exe]/
+/[Logs]/
+/[UserSettings]/
+
+# 太大了
+Assets/Resources/Fonts/阿里巴巴普惠体.asset
+
+# =============== #
+#   构建与导出文件    #
+# =============== #
+# 如果你的打包输出在项目内，可以取消注释下面这行
+# /[YourBuildFolder]/
+
+# Android 导出的 Gradle 工程
+/[Assets/Plugins/Android/assets/
+
+# =============== #
+#   IDE 配置文件    #
+# =============== #
+.vs/
+.gradle/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.opendb
+*.VC.db
+
+# Unity 在使用 VS Code 时生成的临时文件
+.vscode/
+
+# =============== #
+#   系统与日志文件    #
+# =============== #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+sysinfo.txt
+
+# =============== #
+#   Asset Store 插件与备份 #
+# =============== #
+# 如果你不想把从商店下载的包上传（只保留自制内容），可以取消注释
+# /[Assets/AssetStoreTools]/
+
+# Crashlytics 导出的符号文件
+/[Firebase/

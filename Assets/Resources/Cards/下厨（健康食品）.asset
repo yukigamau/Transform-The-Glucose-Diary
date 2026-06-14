@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7be5711f2dcf2e4d85c05ae3b75773b, type: 3}
+  m_Name: "\u4E0B\u53A8\uFF08\u5065\u5EB7\u98DF\u54C1\uFF09"
+  m_EditorClassIdentifier: 
+  actionName: "\u4E0B\u53A8\uFF08\u5065\u5EB7\u98DF\u54C1\uFF09"
+  level: "\u84DD"
+  actionType: "\u8FDB\u98DF"
+  actionScene: "\u53A8\u623F"
+  energyCost: -1
+  healthEffect: 1
+  moodEffect: 0
+  marathon: 0
+  music: 0
+  cook: "\u8FDB\u884C\u4E09\u6B21\u89E3\u9501\u201C\u53A8\u827A\u5927\u5E08\u201D\u80FD\u529B"
+  cardDescription: normal
+  bubbleText: "\u53C8\u8981\u5403\u6BEB\u65E0\u98DF\u6B32\u7684\u9E21\u80F8\u8089\u5417\u2026\u2026"
+  knowledgeText: "\u575A\u6301\u4EB2\u81EA\u4E0B\u53A8\uFF0C\u53EF\u63A7\u6CB9\u76D0\u7CD6\u6444\u5165\uFF0C\u5E73\u7A33\u9910\u540E\u8840\u7CD6\uFF0C\u51CF\u5C11\u70ED\u91CF\u8D85\u6807"
+  stable: 0000000005000000
+  only: 
