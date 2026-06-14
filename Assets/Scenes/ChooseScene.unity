@@ -1389,10 +1389,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 402051699}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &613920098
 MonoBehaviour:
@@ -1677,10 +1677,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Flashcard: {fileID: 724678990}
   Transition: {fileID: 402051698}
-  blackFadeInTime: 1
-  textFadeInTime: 0.5
-  textStayTime: 1.5
-  fadeOutTime: 1
+  blackFadeInTime: 0.5
+  textFadeInTime: 0.25
+  textStayTime: 0.5
+  fadeOutTime: 0.5
+  over: 0
+  GameOverScene: GameOverScene
 --- !u!1 &745476546
 GameObject:
   m_ObjectHideFlags: 0
@@ -2079,6 +2081,7 @@ MonoBehaviour:
   - {fileID: 2022836594}
   cards: []
   Comment: {fileID: 2011117157}
+  curRound: 0
   MaxBarry: 12
   progress: {fileID: 859809656}
 --- !u!114 &859809656
@@ -2179,6 +2182,7 @@ MonoBehaviour:
     MinMood: 70
     MaxMood: 100
     Name: "\u4F60\u597D\uFF0C\u4E16\u754C"
+  OverTitle: 
 --- !u!1 &900987680
 GameObject:
   m_ObjectHideFlags: 0

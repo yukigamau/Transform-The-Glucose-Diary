@@ -41,6 +41,9 @@ public class ProgressBar : MonoBehaviour
     void Start()
     {
         Ini();
+
+        // 游戏结束还要用
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame

@@ -18,7 +18,7 @@ public class Toggle : MonoBehaviour
     public TextMeshProUGUI Comment;
     private List<List<int>> delta;
 
-    private int curRound;
+    public int curRound;
     public int MaxBarry = 12;   // 最大关卡数
     private int barry = 0;  // 当前关卡数
 
