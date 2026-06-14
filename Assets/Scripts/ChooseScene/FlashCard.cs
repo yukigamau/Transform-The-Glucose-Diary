@@ -24,6 +24,7 @@ public class FlashCard : MonoBehaviour
     public void Change(CardData card)
     {
         text.text = card.knowledgeText;
+        ChangePhoto(card);
     }
 
     void ChangePhoto(CardData card)
@@ -37,7 +38,7 @@ public class FlashCard : MonoBehaviour
         float max = Mathf.Max(width, height);
 
         // 2. 加载图片（确保你的 Images 文件夹在 Resources 文件夹内部）
-        string photoName = $"Images/{card.actionScene}";
+        string photoName = $"Images/场景{card.actionScene}";
         Sprite sprite = Resources.Load<Sprite>(photoName);
 
         if (sprite == null)
