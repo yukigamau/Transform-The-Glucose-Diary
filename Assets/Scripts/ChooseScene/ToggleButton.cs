@@ -7,6 +7,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Collider2D))]
 public class ToggleButton : MonoBehaviour
 {
+    public AudioSource audioSource;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +23,8 @@ public class ToggleButton : MonoBehaviour
 
     private void OnMouseDown()
     {
+        audioSource.Play();
+
         // 1. 当这个物体被点击时，直接去寻找之前重命名为 Toggle 的那个全局单例
         // 2. 将当前游戏对象 (gameObject) 作为参数传进去，告诉它我被点击了
         if (Toggle.Instance != null)

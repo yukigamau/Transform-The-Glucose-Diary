@@ -22,6 +22,8 @@ public class Step : MonoBehaviour
     private int curID = 0;
     private bool isTransitioning = false; // 锁：防止玩家在黑布转场时疯狂点击导致逻辑错乱
 
+    public AudioSource audioSource;
+
     void Start()
     {
         // 游戏一开始，确保黑布是完全不透明的（全黑）
@@ -47,6 +49,8 @@ public class Step : MonoBehaviour
     // 核心协程：处理黑布的淡入淡出与内容更换
     IEnumerator TransitionToNextStep(bool isFirstStart)
     {
+        audioSource.Play();
+
         isTransitioning = true;
 
         // --- 1. 如果不是第一次启动，需要先让黑布【淡入】（画面变黑） ---

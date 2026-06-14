@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement; // 💡 新增：用于场景跳转
+using UnityEngine.SceneManagement;
+using UnityEditor; // 💡 新增：用于场景跳转
 
 public class NextStep : MonoBehaviour
 {
@@ -38,6 +39,11 @@ public class NextStep : MonoBehaviour
 
     public bool over = false;   // 游戏结束
     public string GameOverScene;    // 游戏结束后的场景
+
+    [Header("音效")]
+    public AudioSource audioSource;
+    public AudioSource turnToNextDayAudio;
+    public AudioClip final;
 
     private void Awake()
     {
@@ -77,6 +83,8 @@ public class NextStep : MonoBehaviour
 
     void OnNextButtonClick()
     {
+        audioSource.Play();
+
         if (Toggle.Instance == null || Toggle.Instance.toggleObjects == null || Toggle.Instance.toggleObjects.Count == 0)
         {
             Debug.LogError("请先在 Inspector 中将控制器（Toggle）拖入 Toggle Controller 格子！");
@@ -157,6 +165,8 @@ public class NextStep : MonoBehaviour
 
     void TurnToNextDay()
     {
+        turnToNextDayAudio.Play();
+
         StartDayTransition($"第 {Barry_Round.Barry} 天", onScreenBlack: () =>
         {
             Flashcard.SetActive(false);
@@ -168,11 +178,19 @@ public class NextStep : MonoBehaviour
         });
     }
 
+    void PlayFinalSound()
+    {
+        turnToNextDayAudio.clip = final;
+        turnToNextDayAudio.Play();
+    }
+
     /// <summary>
     /// 💡 游戏结束了（已修改：传入 isGameOver = true）
     /// </summary>
     void FinalGame()
     {
+        PlayFinalSound();
+
         GameOverCheck.Instance.AdjustOverTitle(Toggle.Instance.progress.Health.Get(),
             Toggle.Instance.progress.Mood.Get());
 

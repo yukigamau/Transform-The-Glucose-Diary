@@ -6,15 +6,15 @@ using UnityEngine;
 
 public class CardImporter
 {
-    [MenuItem("工具/一键导入新版CSV卡牌")]
-    public static void ImportNewCSV()
+    [MenuItem("工具/一键导入新版TSV卡牌")]
+    public static void ImportNewTSV()
     {
         // 1. 获取在 Project 窗口选中的 CSV 文件路径
         string assetPath = AssetDatabase.GetAssetPath(Selection.activeObject);
 
-        if (string.IsNullOrEmpty(assetPath) || !assetPath.EndsWith(".csv"))
+        if (string.IsNullOrEmpty(assetPath) || !assetPath.EndsWith(".tsv"))
         {
-            EditorUtility.DisplayDialog("提示", "请先在 Project 窗口选中你的 [CardData.csv] 文件！", "知道了");
+            EditorUtility.DisplayDialog("提示", "请先在 Project 窗口选中你的 [CardData.tsv] 文件！", "知道了");
             return;
         }
 
@@ -22,7 +22,7 @@ public class CardImporter
         string[] lines = File.ReadAllLines(assetPath);
         if (lines.Length <= 1)
         {
-            Debug.LogError("CSV 文件内容为空或只有表头！");
+            Debug.LogError("TSV 文件内容为空或只有表头！");
             return;
         }
 

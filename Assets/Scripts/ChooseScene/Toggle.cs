@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class Toggle : MonoBehaviour
@@ -126,6 +127,9 @@ public class Toggle : MonoBehaviour
 
             titleText.text = card.actionName;
             effectText.text = card.EffectToString(progress.Health.Get());
+
+            // 卡片颜色
+            ChangeColor(obj, card);
         }
 
         foreach (GameObject obj in toggleObjects)
@@ -163,5 +167,26 @@ public class Toggle : MonoBehaviour
         progress.Energy.Change(delta[0]);
         progress.Health.Change(delta[1]);
         progress.Mood.Change(delta[2]);
+    }
+
+    // 修改卡片颜色
+    void ChangeColor(GameObject obj, CardData card)
+    {
+        Transform imageTrans = obj.transform.Find("Background");
+        if (imageTrans == null)
+        {
+            Debug.LogError($"{obj.name} 找不到名为 'Background' 的子物体！");
+            return;
+        }
+
+        Image image = imageTrans.GetComponent<Image>();
+        Color color = card.level switch
+        {
+            "白" => new Color(1f, 1f, 1f, 1f),
+            "蓝" => new Color32(102, 204, 255, 255),
+            "金" => new Color32(255, 225, 140, 255),
+            _ => new Color(1f, 1f, 1f, 1f)
+        };
+        image.color = color;
     }
 }
