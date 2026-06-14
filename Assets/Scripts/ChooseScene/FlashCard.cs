@@ -8,6 +8,7 @@ public class FlashCard : MonoBehaviour
 {
     public TextMeshProUGUI text;
     public Image image;
+    public GameObject panel;
 
     // Start is called before the first frame update
     void Start()
@@ -33,8 +34,9 @@ public class FlashCard : MonoBehaviour
         RectTransform rectTrans = image.GetComponent<RectTransform>();
 
         // 1. 获取宽高
-        float width = rectTrans.rect.width;
-        float height = rectTrans.rect.height;
+        RectTransform rect = panel.GetComponent<RectTransform>();
+        float width = rect.rect.width;
+        float height = rect.rect.height;
         float max = Mathf.Max(width, height);
 
         // 2. 加载图片（确保你的 Images 文件夹在 Resources 文件夹内部）
