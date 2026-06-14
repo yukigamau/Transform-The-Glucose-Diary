@@ -128,8 +128,8 @@ public class Toggle : MonoBehaviour
             titleText.text = card.actionName;
             effectText.text = card.EffectToString(progress.Health.Get());
 
-            // 卡片颜色
-            ChangeColor(obj, card);
+            // 改动卡片
+            ChangeCard(obj, card);
         }
 
         foreach (GameObject obj in toggleObjects)
@@ -169,24 +169,70 @@ public class Toggle : MonoBehaviour
         progress.Mood.Change(delta[2]);
     }
 
-    // 修改卡片颜色
-    void ChangeColor(GameObject obj, CardData card)
+    void ChangeCard(GameObject obj, CardData card)
     {
-        Transform imageTrans = obj.transform.Find("Background");
-        if (imageTrans == null)
+        ChangeTextColor(obj, card);
+        ChangeBackPhoto(obj, card);
+    }
+
+    // 修改卡片标题颜色
+    void ChangeTextColor(GameObject obj, CardData card)
+    {
+        string name = "Title";
+        Transform textTrans = obj.transform.Find(name);
+        if (textTrans == null)
         {
-            Debug.LogError($"{obj.name} 找不到名为 'Background' 的子物体！");
+            Debug.LogError($"{obj.name} 找不到名为 '{name}' 的子物体！");
             return;
         }
 
-        Image image = imageTrans.GetComponent<Image>();
-        Color color = card.level switch
+        TextMeshProUGUI text = textTrans.GetComponent<TextMeshProUGUI>();
+        Color black = new Color(0f, 0f, 0f);
+        text.color = card.level switch
         {
-            "白" => new Color(1f, 1f, 1f, 1f),
-            "蓝" => new Color32(102, 204, 255, 255),
-            "金" => new Color32(255, 225, 140, 255),
-            _ => new Color(1f, 1f, 1f, 1f)
+            "白" => black,
+            "蓝" => new Color32(81, 163, 206, 255),
+            "金" => new Color32(255, 208, 0, 255),
+            _ => black
         };
-        image.color = color;
+    }
+
+    // 修改图片背景
+    void ChangeBackPhoto(GameObject obj, CardData card)
+    {
+        string panel = "Panel";
+        string name = "Image";
+        Transform imageTrans = obj.transform.Find(panel).transform.Find(name);
+        if (imageTrans == null) return;
+
+        Image image = imageTrans.GetComponent<Image>();
+        // 获取当前图片节点上的 RectTransform 组件
+        RectTransform rectTrans = image.GetComponent<RectTransform>();
+
+        // 1. 获取传入的卡牌面板的 RectTransform 宽高
+        RectTransform objRectTrans = toggleObjects[0].GetComponent<RectTransform>();
+        float width = objRectTrans.rect.width;
+        float height = objRectTrans.rect.height;
+        float max = Mathf.Max(width, height);
+
+        // 2. 加载图片（确保你的 Images 文件夹在 Resources 文件夹内部）
+        string photoName = $"Images/卡片{card.actionType}（扣图）";
+        Sprite sprite = Resources.Load<Sprite>(photoName);
+
+        if (sprite == null)
+        {
+            Debug.LogError($"未能加载图片: {photoName}");
+            return;
+        }
+
+        // 3. 更换图片
+        image.sprite = sprite;
+
+        // 4. 正确修改 UI 的长宽为 max (使用 sizeDelta 赋值)
+        rectTrans.sizeDelta = new Vector2(max, max);
+
+        // 💡 额外建议：由于你把长宽都强行设为了 max（变成了正方形），
+        // 如果原图不是正方形，建议开启保持比例，防止图片被拉伸变形
+        image.preserveAspect = true;
     }
 }
