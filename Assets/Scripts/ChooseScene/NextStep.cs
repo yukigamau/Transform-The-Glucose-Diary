@@ -4,7 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEditor; // 💡 新增：用于场景跳转
 
 public class NextStep : MonoBehaviour
 {
@@ -39,6 +38,7 @@ public class NextStep : MonoBehaviour
 
     public bool over = false;   // 游戏结束
     public string GameOverScene;    // 游戏结束后的场景
+    public GameObject finalImage;   // 游戏结束时要显示的图片
 
     [Header("音效")]
     public AudioSource audioSource;
@@ -74,6 +74,7 @@ public class NextStep : MonoBehaviour
 
         if (flashCard != null) flashCard.SetActive(false);
         if (Transition != null) Transition.SetActive(false);
+        if (finalImage != null) finalImage.SetActive(false); // 💡 新增：开局确保结算图关闭
 
         // 游戏刚启动第一天：初始化选项并直接强制开场黑幕转场
         Barry_Round.Ini();
@@ -151,7 +152,6 @@ public class NextStep : MonoBehaviour
         FlashCard fc = flashCardTrans.GetComponent<FlashCard>();
         int index = Toggle.currentIndex;
         fc.Change(Toggle.Instance.cards[index]);
-        //ChangeFlashcard();
     }
 
     bool ReturnToCurrentDaySelection()
@@ -159,11 +159,6 @@ public class NextStep : MonoBehaviour
         flashCard.SetActive(false);
         buttonText.text = originalText;
         ifChoose = true;
-
-        // 说明没有足够的选项以供使用，但是直接这样做很容易出现重复或多关的问题
-        // 用一个布尔表示是否真的有更多东西
-        //if (!Toggle.Instance.IniOptions())
-        //    TurnToNextDay();
         return Toggle.Instance.IniOptions();
     }
 
@@ -179,6 +174,7 @@ public class NextStep : MonoBehaviour
 
             Toggle.Instance.progress.Energy.Initialize();
             Toggle.Instance.IniOptions();
+            if (finalImage != null) finalImage.SetActive(false); // 安全防范
         });
     }
 
@@ -189,7 +185,7 @@ public class NextStep : MonoBehaviour
     }
 
     /// <summary>
-    /// 💡 游戏结束了（已修改：传入 isGameOver = true）
+    /// 💡 修正后的游戏结束逻辑
     /// </summary>
     void FinalGame()
     {
@@ -198,32 +194,38 @@ public class NextStep : MonoBehaviour
         GameOverCheck.Instance.AdjustOverTitle(Toggle.Instance.progress.Health.Get(),
             Toggle.Instance.progress.Mood.Get());
 
-        string endTitle = GameOverCheck.Instance.OverTitle;
-        Debug.Log($"[游戏结束文本测试]: {endTitle}");
+        string endText = GameOverCheck.Instance.OverTitle;
+        Debug.Log($"[游戏结束文本测试]: {endText}");
 
-        // 💡 重点：这里给第三个参数传了 true，代表这是游戏结束转场
-        StartDayTransition($"{endTitle}", onScreenBlack: () =>
+        // 💡 重点：这里不再直接在这里调用 SetFinalPhoto。
+        // 我们把它挪到黑幕完全变黑的瞬间（onScreenBlack 委托里）去执行！
+        StartDayTransition($"{endText}", onScreenBlack: () =>
         {
-            if (flashCard != null)
-                flashCard.SetActive(false);
+            // 1. 关闭普通游戏界面
+            if (flashCard != null) flashCard.SetActive(false);
+
+            // 2. ✨ 当黑幕完全全黑遮挡住原本空洞的场景时，在黑幕内部/前方把图片加载出来！
+            string endTitle = GameOverCheck.Instance.GetSpecial();
+            SetFinalPhoto(endTitle);
+
         }, isStartImmediate: false, isGameOver: true);
+    }
+
+    void SetFinalPhoto(string endTitle)
+    {
+        if (finalImage == null) return;
+        FinalImage fi = finalImage.GetComponent<FinalImage>();
+        finalImage.SetActive(true);
+        if (fi != null)
+        {
+            fi.SetImage(endTitle);
+        }
     }
 
     private bool CheckIfEnergyExhausted(int currentEnergy)
     {
         return currentEnergy <= 0;
     }
-
-    //void ChangeFlashcard()
-    //{
-    //    Transform txtTrans = flashCard.transform.Find("Text");
-    //    if (txtTrans != null)
-    //    {
-    //        TextMeshProUGUI text = txtTrans.GetComponent<TextMeshProUGUI>();
-    //        int index = Toggle.currentIndex;
-    //        text.text = Toggle.Instance.cards[index].knowledgeText;
-    //    }
-    //}
 
     IEnumerator RestoreButtonText()
     {
@@ -232,9 +234,8 @@ public class NextStep : MonoBehaviour
         restoreTextCoroutine = null;
     }
 
-    // ------------------ 转场核心协程 (已调整支持游戏结束不消失) ------------------
+    // ------------------ 转场核心协程 (修复层级空缺与文本重置) ------------------
 
-    // 重载方法，为了兼容 Start() 里的旧调用，给 isGameOver 加了默认值 false
     public void StartDayTransition(string dayText, System.Action onScreenBlack = null, bool isStartImmediate = false, bool isGameOver = false)
     {
         if (Transition == null || blackScreenCG == null || textCG == null) return;
@@ -246,7 +247,12 @@ public class NextStep : MonoBehaviour
     {
         Transition.SetActive(true);
 
-        // 确保 Transition 及其子物体的 Image 能够阻挡并接收点击
+        // 💡 修复：确保每次非游戏结束转场时，把对齐方式重置回正中心
+        if (!isGameOver && transitionText != null)
+        {
+            transitionText.alignment = TextAlignmentOptions.Center;
+        }
+
         var mainImage = Transition.GetComponent<Image>();
         if (mainImage != null) mainImage.raycastTarget = true;
 
@@ -259,6 +265,7 @@ public class NextStep : MonoBehaviour
         blackScreenCG.alpha = isStartImmediate ? 1f : 0f;
         textCG.alpha = 0f;
 
+        // 1. 黑幕淡入阶段
         if (!isStartImmediate)
         {
             float timer = 0f;
@@ -271,8 +278,16 @@ public class NextStep : MonoBehaviour
         }
         blackScreenCG.alpha = 1f;
 
+        // 2. ✨ 黑幕此时完全变黑。触发委托（隐藏旧卡片，生成/激活 FinalImage）
         if (onScreenBlack != null) onScreenBlack.Invoke();
 
+        // 3. 如果是游戏结束，文字改到底部居中
+        if (isGameOver && transitionText != null)
+        {
+            transitionText.alignment = TextAlignmentOptions.Bottom;
+        }
+
+        // 4. 文字（与图片，如果图片挂在Text节点或与其同步）淡入阶段
         float textTimer = 0f;
         while (textTimer < textFadeInTime)
         {
@@ -282,22 +297,19 @@ public class NextStep : MonoBehaviour
         }
         textCG.alpha = 1f;
 
-        // 核心改动位置
+        // 5. 游戏结束拦截
         if (isGameOver)
         {
-            // 如果是游戏结束，不再走后面的淡出逻辑，而是就地挂载/启用点击事件
             Button transitionButton = Transition.GetComponent<Button>();
             if (transitionButton == null)
             {
-                // 如果没有 Button 组件，代码动态赋予一个
                 transitionButton = Transition.AddComponent<Button>();
             }
 
-            // 清除可能残存的监听，并绑定跳转场景的方法
             transitionButton.onClick.RemoveAllListeners();
             transitionButton.onClick.AddListener(ToGameOverScene);
 
-            yield break; // 彻底斩断协程，让画面永远停在这一帧，等待玩家点击
+            yield break; // 彻底停在这里，画面定格
         }
 
         // --- 以下是原本的正常过天淡出逻辑 ---
@@ -317,9 +329,6 @@ public class NextStep : MonoBehaviour
         Transition.SetActive(false);
     }
 
-    /// <summary>
-    /// 💡 点击黑幕后触发此函数跳转场景
-    /// </summary>
     private void ToGameOverScene()
     {
         Debug.Log("检测到黑幕点击，正在切往 GameOverScence...");

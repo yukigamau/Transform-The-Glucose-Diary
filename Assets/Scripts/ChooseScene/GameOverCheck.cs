@@ -183,8 +183,7 @@ public class GameOverCheck : MonoBehaviour
                     OverTitle = f.GetOverTitle();
     }
 
-    // 获取最终的称号
-    public string GetSpecial_Destory()
+    public string GetSpecial()
     {
         /// OverTitle的第一行就是称号
 
@@ -206,6 +205,13 @@ public class GameOverCheck : MonoBehaviour
         // 💡 额外安全处理：去除 Windows 换行符残留下来的 \r 
         firstLine = firstLine.TrimEnd('\r');
 
+        return firstLine;
+    }
+
+    // 获取最终的称号
+    public string GetSpecial_Destory()
+    {
+        string firstLine = GetSpecial();
         Destroy(gameObject);
 
         return firstLine;
