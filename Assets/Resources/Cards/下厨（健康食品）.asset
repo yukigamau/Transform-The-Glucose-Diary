@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionName: "\u4E0B\u53A8\uFF08\u5065\u5EB7\u98DF\u54C1\uFF09"
   level: "\u84DD"
-  actionType: "\u8FDB\u98DF"
+  actionType: "\u4E0B\u53A8"
   actionScene: "\u53A8\u623F"
   energyCost: -1
   healthEffect: 1

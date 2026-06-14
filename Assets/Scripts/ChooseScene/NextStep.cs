@@ -9,7 +9,7 @@ using UnityEditor; // 💡 新增：用于场景跳转
 public class NextStep : MonoBehaviour
 {
     [Header("需要控制启用的 Flashcard 对象")]
-    public GameObject Flashcard;
+    public GameObject flashCard;
 
     private Button myButton;
     private TextMeshProUGUI buttonText;
@@ -72,7 +72,7 @@ public class NextStep : MonoBehaviour
         buttonText = GetComponentInChildren<TextMeshProUGUI>();
         buttonText.text = originalText;
 
-        if (Flashcard != null) Flashcard.SetActive(false);
+        if (flashCard != null) flashCard.SetActive(false);
         if (Transition != null) Transition.SetActive(false);
 
         // 游戏刚启动第一天：初始化选项并直接强制开场黑幕转场
@@ -142,17 +142,21 @@ public class NextStep : MonoBehaviour
 
     void TurnToFlashcard()
     {
-        Flashcard.SetActive(true);
+        flashCard.SetActive(true);
         Toggle.Instance.CloseOptions();
         buttonText.text = flashcardText;
         ifChoose = false;
 
-        ChangeFlashcard();
+        Transform flashCardTrans = flashCard.transform;
+        FlashCard fc = flashCardTrans.GetComponent<FlashCard>();
+        int index = Toggle.currentIndex;
+        fc.Change(Toggle.Instance.cards[index]);
+        //ChangeFlashcard();
     }
 
     bool ReturnToCurrentDaySelection()
     {
-        Flashcard.SetActive(false);
+        flashCard.SetActive(false);
         buttonText.text = originalText;
         ifChoose = true;
 
@@ -169,7 +173,7 @@ public class NextStep : MonoBehaviour
 
         StartDayTransition($"第 {Barry_Round.Barry} 天", onScreenBlack: () =>
         {
-            Flashcard.SetActive(false);
+            flashCard.SetActive(false);
             buttonText.text = originalText;
             ifChoose = true;
 
@@ -200,8 +204,8 @@ public class NextStep : MonoBehaviour
         // 💡 重点：这里给第三个参数传了 true，代表这是游戏结束转场
         StartDayTransition($"{endTitle}", onScreenBlack: () =>
         {
-            if (Flashcard != null)
-                Flashcard.SetActive(false);
+            if (flashCard != null)
+                flashCard.SetActive(false);
         }, isStartImmediate: false, isGameOver: true);
     }
 
@@ -210,16 +214,16 @@ public class NextStep : MonoBehaviour
         return currentEnergy <= 0;
     }
 
-    void ChangeFlashcard()
-    {
-        Transform txtTrans = Flashcard.transform.Find("Text");
-        if (txtTrans != null)
-        {
-            TextMeshProUGUI text = txtTrans.GetComponent<TextMeshProUGUI>();
-            int index = Toggle.currentIndex;
-            text.text = Toggle.Instance.cards[index].knowledgeText;
-        }
-    }
+    //void ChangeFlashcard()
+    //{
+    //    Transform txtTrans = flashCard.transform.Find("Text");
+    //    if (txtTrans != null)
+    //    {
+    //        TextMeshProUGUI text = txtTrans.GetComponent<TextMeshProUGUI>();
+    //        int index = Toggle.currentIndex;
+    //        text.text = Toggle.Instance.cards[index].knowledgeText;
+    //    }
+    //}
 
     IEnumerator RestoreButtonText()
     {

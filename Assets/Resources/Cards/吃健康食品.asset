@@ -15,7 +15,7 @@ MonoBehaviour:
   actionName: "\u5403\u5065\u5EB7\u98DF\u54C1"
   level: "\u767D"
   actionType: "\u8FDB\u98DF"
-  actionScene: "\u9910\u5385"
+  actionScene: "\u53A8\u623F"
   energyCost: -1
   healthEffect: "3 + \u5065\u5EB7\u503C * 0.03"
   moodEffect: -2
