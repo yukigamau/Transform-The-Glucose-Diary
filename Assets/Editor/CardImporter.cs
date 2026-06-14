@@ -75,19 +75,17 @@ public class CardImporter
             card.moodEffect = columns[index++].Trim();
             card.cardDescription = columns[index++].Trim(); // 对应表格中的“卡面描述”列
 
-            // 【数值影响 - 专长文本描述】 (第 8 - 10 列)
-            card.marathon = ParseStringSafe(columns[index++]);
-            card.music = ParseStringSafe(columns[index++]);
-            card.cook = ParseStringSafe(columns[index++]);
+            // 【前置条件】
+            card.condition = ParseStringSafe(columns[index++]);
 
-            // 顺延一列“结局导向”数据 (第 11 列)，资产类里没定义，这里直接略过
+            // 顺延一列“结局导向”数据，资产类里没定义，这里直接略过
             index++;
 
-            // 【文本与描述 - 气泡与知识卡片】 (第 12 - 13 列)
+            // 【文本与描述 - 气泡与知识卡片】
             card.bubbleText = columns[index++].Trim();
             card.knowledgeText = columns[index++].Trim();
 
-            // 【限制 - 固定与仅出现时机】 (第 14 - 15 列)
+            // 【限制 - 固定与仅出现时机】 
             card.stable = ParseSpaceSeparatedList(columns[index++]);
             card.only = ParseSpaceSeparatedList(columns[index++]);
 

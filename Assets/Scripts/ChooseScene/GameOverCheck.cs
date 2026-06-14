@@ -14,7 +14,7 @@ public class GameOverCheck : MonoBehaviour
         public string Name; // 名字
         public string Event;    // 事件
         public string Achieve;  // 成就
-        public bool Got;    // 获得
+        public bool Got;    // 是否获得
         public string Comment;  // 评论
 
         public bool Check(string EventName)
@@ -33,10 +33,12 @@ public class GameOverCheck : MonoBehaviour
         }
     }
 
+    // 在第10天结束后才能触发的结果，有比较麻烦的处理
     public Condition LongRuner;
     public Condition Cooker;
     public Condition Guitar;
-    private List<Condition> conditions;
+    [Header("动态处理")]
+    public List<Condition> conditions;
 
     [System.Serializable]
     public struct Attribute
@@ -63,6 +65,7 @@ public class GameOverCheck : MonoBehaviour
 
     public Attribute EatMuch;
     public Attribute Groomy;
+    // 用于根据属性判断普通的结果，得不到特殊结果，但是有提前结束的能力
     private List<Attribute> attributes; 
 
     [System.Serializable]
@@ -133,16 +136,33 @@ public class GameOverCheck : MonoBehaviour
     {
         for(int i = 0; i< conditions.Count; i++)
         {
+            // 达成特殊结局
             if (conditions[i].Check(title) && conditions[i].Got)
+            {
+                OverTitle = conditions[i].Achieve + "\n";
+                OverTitle += $"你完成了{conditions[i].Level}次{conditions[i].Event}\n";
+                OverTitle += $"达成了{conditions[i].Name}，并完成了{title}";
+
                 return true;
+            }
         }
 
         return false;
     }
 
+    // 是否结束
     public bool IfOver(int health, int mood)
     {
-        for(int i=0;i<attributes.Count;i++)
+        // 至少要完成10局
+        // 在判定IfOver时，已经完成了Barry的增加，所以Barry是下一天的
+        if (Barry_Round.Barry <= 10)
+            return false;
+
+        if (OverTitle != "")
+            return true;
+
+        // 基于数值的普通结果
+        for (int i = 0; i < attributes.Count; i++)
         {
             if (attributes[i].Comein(health, mood))
             {

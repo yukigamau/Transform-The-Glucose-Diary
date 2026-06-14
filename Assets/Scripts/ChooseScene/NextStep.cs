@@ -34,7 +34,6 @@ public class NextStep : MonoBehaviour
     private CanvasGroup textCG;
     private TextMeshProUGUI transitionText;
 
-    private int barry = 0; // 当前关卡数/天数
     private Coroutine restoreTextCoroutine;
 
     public bool over = false;   // 游戏结束
@@ -71,10 +70,9 @@ public class NextStep : MonoBehaviour
         if (Transition != null) Transition.SetActive(false);
 
         // 游戏刚启动第一天：初始化选项并直接强制开场黑幕转场
-        barry = 1;
-        Toggle.Instance.SetBarry(barry);
+        Barry_Round.Ini();
         Toggle.Instance.IniOptions();
-        StartDayTransition($"第 {barry} 天", isStartImmediate: true);
+        StartDayTransition($"第 {Barry_Round.Barry} 天", isStartImmediate: true);
     }
 
     void OnNextButtonClick()
@@ -109,27 +107,28 @@ public class NextStep : MonoBehaviour
                 TurnToFlashcard();
             }
         }
-        else
+        else // 知识卡片
         {
             int currentEnergy = Toggle.Instance.progress.Energy.Get();
             bool isEnergyExhausted = CheckIfEnergyExhausted(currentEnergy);
 
-            if (isEnergyExhausted)
+            if (!isEnergyExhausted)
             {
-                if (GameOverCheck.Instance.IfOver(Toggle.Instance.progress.Health.Get(),
-                    Toggle.Instance.progress.Mood.Get()))
-                    FianlGame();
-                else if (barry < Toggle.Instance.MaxBarry)
-                {
-                    TurnToNextDay();
-                }
-                else
-                    FianlGame();
+                if (ReturnToCurrentDaySelection())  // 当天还没有完成
+                    return; // 如果没有成功返回当天，则会继续下面的逻辑
             }
+
+            // 当天已经完成，需要前往下一天或结束
+            Barry_Round.NextBarry();
+
+            if (GameOverCheck.Instance.IfOver
+                (Toggle.Instance.progress.Health.Get(),
+                Toggle.Instance.progress.Mood.Get()))
+                FinalGame();
+            else if (Barry_Round.IfFinishBarries())
+                FinalGame();    // 完成所有天数
             else
-            {
-                ReturnToCurrentDaySelection();
-            }
+                TurnToNextDay();
         }
     }
 
@@ -143,29 +142,28 @@ public class NextStep : MonoBehaviour
         ChangeFlashcard();
     }
 
-    void ReturnToCurrentDaySelection()
+    bool ReturnToCurrentDaySelection()
     {
         Flashcard.SetActive(false);
         buttonText.text = originalText;
         ifChoose = true;
 
-        if (!Toggle.Instance.IniOptions())
-            TurnToNextDay();
+        // 说明没有足够的选项以供使用，但是直接这样做很容易出现重复或多关的问题
+        // 用一个布尔表示是否真的有更多东西
+        //if (!Toggle.Instance.IniOptions())
+        //    TurnToNextDay();
+        return Toggle.Instance.IniOptions();
     }
 
     void TurnToNextDay()
     {
-        barry++;
-
-        StartDayTransition($"第 {barry} 天", onScreenBlack: () =>
+        StartDayTransition($"第 {Barry_Round.Barry} 天", onScreenBlack: () =>
         {
             Flashcard.SetActive(false);
             buttonText.text = originalText;
             ifChoose = true;
 
             Toggle.Instance.progress.Energy.Initialize();
-            Toggle.Instance.SetBarry(barry);
-            Toggle.Instance.curRound = 0;
             Toggle.Instance.IniOptions();
         });
     }
@@ -173,7 +171,7 @@ public class NextStep : MonoBehaviour
     /// <summary>
     /// 💡 游戏结束了（已修改：传入 isGameOver = true）
     /// </summary>
-    void FianlGame()
+    void FinalGame()
     {
         GameOverCheck.Instance.AdjustOverTitle(Toggle.Instance.progress.Health.Get(),
             Toggle.Instance.progress.Mood.Get());
@@ -184,8 +182,8 @@ public class NextStep : MonoBehaviour
         // 💡 重点：这里给第三个参数传了 true，代表这是游戏结束转场
         StartDayTransition($"{endTitle}", onScreenBlack: () =>
         {
-            if (Flashcard != null) Flashcard.SetActive(false);
-            Toggle.Instance.SetBarry(barry);
+            if (Flashcard != null)
+                Flashcard.SetActive(false);
         }, isStartImmediate: false, isGameOver: true);
     }
 

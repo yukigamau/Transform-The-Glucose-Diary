@@ -18,10 +18,6 @@ public class Toggle : MonoBehaviour
     public TextMeshProUGUI Comment;
     private List<List<int>> delta;
 
-    public int curRound;
-    public int MaxBarry = 12;   // 最大关卡数
-    private int barry = 0;  // 当前关卡数
-
     public ProgressBar progress;
 
     void Awake()
@@ -35,7 +31,7 @@ public class Toggle : MonoBehaviour
     {
         Comment.text = "";
 
-        curRound = 0;
+        Barry_Round.Ini();
     }
 
     // 💡 核心中央控制函数：当某个对象被点击时调用
@@ -100,7 +96,7 @@ public class Toggle : MonoBehaviour
     {
         var cardManager = CardManager.Instance;
         cards.Clear();
-        cards = cardManager.GetRandomCard(round: curRound, barry: barry,
+        cards = cardManager.GetRandomCard(round: Barry_Round.Round, barry: Barry_Round.Barry,
             energy: progress.Energy.Get());
 
         if (cards.Count == 0)
@@ -154,7 +150,7 @@ public class Toggle : MonoBehaviour
             obj.SetActive(false);
         }
         Comment.text = "";  // 关闭时清空文本
-        curRound++; // 准备进入下一回合
+        Barry_Round.NextRound(); // 准备进入下一回合
     }
 
     // 结算当前回合
@@ -167,10 +163,5 @@ public class Toggle : MonoBehaviour
         progress.Energy.Change(delta[0]);
         progress.Health.Change(delta[1]);
         progress.Mood.Change(delta[2]);
-    }
-
-    public void SetBarry(int newBarry)
-    {
-        barry = newBarry;
     }
 }

@@ -14,9 +14,7 @@ public class CardData : ScriptableObject
     public int energyCost;            // 精力值
     public string healthEffect;       // 健康值影响 (CSV里带公式或加减号，用string存最稳妥)
     public string moodEffect;         // 心情值影响 (同上，方便后续解析)
-    public string marathon;           // 马拉松值（如果无的话，默认为0）
-    public string music;              // 音乐值（如果无的话，默认为0）
-    public string cook;               // 烹饪值（如果无的话，默认为0）
+    public string condition;          // 前置条件
 
     [Header("文本与描述")]
     [TextArea(3, 5)] public string cardDescription; // 卡面描述

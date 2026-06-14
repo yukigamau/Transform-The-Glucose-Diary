@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class CardManager : MonoBehaviour
@@ -107,11 +108,11 @@ public class CardManager : MonoBehaviour
         if (loadedCards != null && loadedCards.Length > 0)
         {
             cardDataList.AddRange(loadedCards);
-            Debug.Log($"🎉 成功动态加载了 {loadedCards.Length} 张卡牌资产！");
+            UnityEngine.Debug.Log($"🎉 成功动态加载了 {loadedCards.Length} 张卡牌资产！");
         }
         else
         {
-            Debug.LogError("🚨 无法加载卡牌资产！请检查 Assets/Resources/Cards 目录。");
+            UnityEngine.Debug.LogError("🚨 无法加载卡牌资产！请检查 Assets/Resources/Cards 目录。");
             return;
         }
 
@@ -123,8 +124,23 @@ public class CardManager : MonoBehaviour
     public bool IfRoundStable(int round) => stableRound_CardID.ContainsKey(round);
     public bool IfBarryOnly(int barry) => onlyBarry_CardID.ContainsKey(barry);
 
+    // 检查卡牌的前置条件
+    bool CheckCondition(CardData cardData)
+    {
+        if (cardData.condition == "" || cardData.condition == "0")
+            return true;
+
+        foreach(GameOverCheck.Condition condition in GameOverCheck.Instance.conditions)
+        {
+            if (condition.Name == cardData.condition && condition.Got)
+                return true;
+        }
+
+        return false;
+    }
+
     /// <summary>
-    /// 获取指定回合的随机卡牌列表（共3张，且精力消耗在 energy 之内，不用去重）
+    /// 获取指定回合的随机卡牌列表（共3张，且精力消耗在 energy 之内，且必须满足前置条件，不用去重）
     /// </summary>
     public List<CardData> GetRandomCard(int round, int barry, int energy)
     {
@@ -142,31 +158,39 @@ public class CardManager : MonoBehaviour
             rawPool.AddRange(normalCard);
         }
 
-        // 💡 纠个小错：这里传进来的参数是 barry，所以原先代码的 onlyBarry_CardID[round] 应该改成 [barry]
         if (IfBarryOnly(barry))
         {
             rawPool.AddRange(onlyBarry_CardID[barry]);
         }
 
-        // 2. 【新增逻辑】精力过滤：从原始卡池中挑选出消耗在当前精力范围内的卡牌 ID 组成新卡池
+        // 2. 【核心修改】双重过滤：同时筛选 精力消耗 与 前置条件
         List<int> filteredPool = new List<int>();
         foreach (int cardId in rawPool)
         {
-            // 如果卡牌的精力消耗（注意：由于配置表里带负号，如 -2、-4，所以是“绝对值 <= 当前精力”
-            // 或者是直接判断 “卡牌消耗的绝对值 <= energy” 或者是 “-cardDataList[cardId].energyCost <= energy”）
-            // 那么卡牌消耗的精力就是 Mathf.Abs(energyCost) 
-            int cost = Mathf.Abs(cardDataList[cardId].energyCost);
+            CardData card = cardDataList[cardId];
 
-            if (cost <= energy)
+            // 检查一：精力是否足够 (绝对值 <= 当前可用精力)
+            int cost = Mathf.Abs(card.energyCost);
+            bool isEnergyEnough = cost <= energy;
+
+            // 检查二：前置条件是否满足
+            bool isConditionMet = CheckCondition(card);
+
+            // 只有两个条件同时满足，这张卡牌才算解锁并允许被抽到
+            if (isEnergyEnough && isConditionMet)
             {
                 filteredPool.Add(cardId);
             }
         }
 
-        // 防御性代码：如果过滤后的卡池为空，说明玩家当前精力不够用任何一张牌，直接返回空列表
+        // 🛑 防御性兜底：如果过滤后的卡池为空，说明没有任何一张卡满足条件
         if (filteredPool.Count == 0)
         {
-            Debug.LogWarning($"⚠️ 回合 {round} 精力为 {energy} 时，卡池中没有符合精力消耗条件的卡牌！");
+            UnityEngine.Debug.LogWarning($"礼貌警告 ⚠️: 天数 {barry} | 回合 {round} | 精力 {energy} 时，" +
+                                         $"过滤出的合法卡池为空！(可能是精力耗尽或前置条件把卡滤光了)");
+
+            // 💡 脱困策略：如果完全没有合法卡牌，直接返回一个空列表，
+            // 这样你的上层控制器（如 Toggle）收到空列表后，就能立刻识别并触发“过天(TurnToNextDay)”或“结算(FianlGame)”
             return result;
         }
 
@@ -175,14 +199,13 @@ public class CardManager : MonoBehaviour
 
         for (int i = 0; i < cardsToDraw; i++)
         {
-            // 从符合精力条件的卡池里随机选一个
-            int randomIndex = Random.Range(0, filteredPool.Count);
+            // 从完全合法的卡池里随机选一个
+            int randomIndex = UnityEngine.Random.Range(0, filteredPool.Count);
             int selectedCardId = filteredPool[randomIndex];
 
             result.Add(cardDataList[selectedCardId]);
 
-            // 💡 提示：因为你明确要求“不用去重”，所以这里【不需要】从 filteredPool 中 Remove
-            // 这样同一张卡牌如果权重高，或者运气好，是有可能在 result 里出现 2 次甚至 3 次的。
+            // 由于你明确要求不用去重，这里不需要 Remove，同一张牌可能重复出现
         }
 
         return result;

@@ -16,6 +16,7 @@ public class GameOverText : MonoBehaviour
     void Start()
     {
         ReadFinalData();
+        finalSpecial = "在本次游戏中，你得到了\n" + finalSpecial;
         textMeshProUGUI.text = finalSpecial;
     }
 
