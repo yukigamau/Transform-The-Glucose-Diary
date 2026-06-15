@@ -1840,7 +1840,7 @@ MonoBehaviour:
   textStayTime: 0.5
   fadeOutTime: 0.5
   over: 0
-  GameOverScene: GameOverScene
+  GameOverScene: StartScene
   finalImage: {fileID: 139855018}
   audioSource: {fileID: 859809659}
   turnToNextDayAudio: {fileID: 735868762}
