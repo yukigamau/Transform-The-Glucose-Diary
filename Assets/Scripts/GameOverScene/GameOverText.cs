@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class GameOverText : MonoBehaviour
 {
-    private int finalHealth;
-    private int finalMood;
+    private float finalHealth;
+    private float finalMood;
     private string finalSpecial;
 
     public TextMeshProUGUI textMeshProUGUI;

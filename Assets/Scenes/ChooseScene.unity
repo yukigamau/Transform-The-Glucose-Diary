@@ -2355,18 +2355,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health:
     BarText: {fileID: 2013438520}
-    Ini: 40
+    Ini: 30
     Max: 100
     Addition: 
   Mood:
     BarText: {fileID: 990219712}
-    Ini: 50
+    Ini: 40
     Max: 100
     Addition: 
   Energy:
     BarText: {fileID: 465989573}
-    Ini: 10
-    Max: 10
+    Ini: 15
+    Max: 15
     Addition: "\u7CBE\u529B\u503C\uFF1A"
 --- !u!114 &859809657
 MonoBehaviour:

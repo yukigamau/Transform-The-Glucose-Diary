@@ -17,7 +17,7 @@ public class Toggle : MonoBehaviour
     // 当前处于被选中状态的对象索引，-1表示初始状态没有任何对象被选中
     public static int currentIndex = -1;
     public TextMeshProUGUI Comment;
-    private List<List<int>> delta;
+    private List<List<float>> delta;
 
     public ProgressBar progress;
 
@@ -101,7 +101,10 @@ public class Toggle : MonoBehaviour
             energy: progress.Energy.Get());
 
         if (cards.Count == 0)
+        {
+            Debug.Log($"没有可以抽取的卡。精力值：{progress.Energy.Get()}");
             return false;
+        }
 
         comments.Clear();
         for (int i = 0; i < 3; i++)

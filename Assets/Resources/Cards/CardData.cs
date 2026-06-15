@@ -31,12 +31,12 @@ public class CardData : ScriptableObject
         {
             "白" => 10,
             "蓝" => 4,
-            "金" => 1,
+            "金" => 2,
             _ => 0
         };
     }
 
-    public string EffectToString(int healthValue)
+    public string EffectToString(float healthValue)
     {
         string effectString;
         if (cardDescription == "normal")
@@ -44,11 +44,11 @@ public class CardData : ScriptableObject
         else
             effectString = $"精力值{-10}（结束今天）\n";
 
-        int healthCost = (int)FormulaCalculator.EvaluateFormula(healthEffect, "健康值", healthValue);
-        effectString += $"健康值{healthCost:+#;-#;0}\n";
+        float healthCost = FormulaCalculator.EvaluateFormula(healthEffect, "健康值", healthValue);
+        effectString += $"健康值{healthCost:+0.00;-0.00;0}\n";
 
-        int moodCost = (int)FormulaCalculator.EvaluateFormula(moodEffect, "健康值", healthValue);
-        effectString += $"心情值{moodCost:+#;-#;0}\n";
+        float moodCost = FormulaCalculator.EvaluateFormula(moodEffect, "健康值", healthValue);
+        effectString += $"心情值{moodCost:+0.00;-0.00;0}\n";
 
         return effectString;
     }

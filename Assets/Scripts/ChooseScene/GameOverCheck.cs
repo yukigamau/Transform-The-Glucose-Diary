@@ -61,13 +61,13 @@ public class GameOverCheck : MonoBehaviour
     [System.Serializable]
     public struct Attribute
     {
-        public int HealthCondition;
-        public int MoodCondition;
+        public float HealthCondition;
+        public float MoodCondition;
         public string Name;
         [TextArea(3, 5)] public string Epilogue;
 
         // 是否达成
-        public bool Comein(int health, int mood)
+        public bool Comein(float health, float mood)
         {
             if (health < HealthCondition && mood < MoodCondition)
                 return true;
@@ -89,16 +89,16 @@ public class GameOverCheck : MonoBehaviour
     [System.Serializable]
     public struct Final
     {
-        public int MinHealth;
-        public int MaxHealth;
-        public int MinMood;
-        public int MaxMood;
+        public float MinHealth;
+        public float MaxHealth;
+        public float MinMood;
+        public float MaxMood;
         public string Name;
 
-        public bool Comein(int health, int mood)
+        public bool Comein(float health, float mood)
         {
             if (health > MinHealth && health <= MaxHealth
-                && mood > MinMood && mood <= MaxMood)
+                || mood > MinMood && mood <= MaxMood)
                 return true;
             else
                 return false;
@@ -107,8 +107,6 @@ public class GameOverCheck : MonoBehaviour
         public string GetOverTitle()
         {
             string s = $"{Name}\n";
-            s += $"你的健康值≥{MinHealth}并≤{MaxHealth}\n";
-            s += $"你的心情值≥{MinMood}并≤{MaxMood}\n";
             return s;
         }
     }
@@ -138,8 +136,8 @@ public class GameOverCheck : MonoBehaviour
         attributes.Add(Groomy);
 
         fianls = new List<Final>();
+        fianls.Add(HelloWorld); // HelloWorld权重在Normal之前
         fianls.Add(Normal);
-        fianls.Add(HelloWorld);
 
         OverTitle = "";
     }
@@ -174,7 +172,7 @@ public class GameOverCheck : MonoBehaviour
     }
 
     // 是否结束
-    public bool IfOver(int health, int mood)
+    public bool IfOver(float health, float mood)
     {
         // 基于数值的普通结果
         for (int i = 0; i < attributes.Count; i++)
@@ -198,7 +196,7 @@ public class GameOverCheck : MonoBehaviour
     }
 
     // 如果没有OverTitle，则寻找常规结果
-    public void AdjustOverTitle(int health, int mood)
+    public void AdjustOverTitle(float health, float mood)
     {
         if (OverTitle == "")
             foreach (Final f in fianls)

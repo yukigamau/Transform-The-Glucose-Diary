@@ -120,7 +120,7 @@ public class NextStep : MonoBehaviour
         }
         else // 知识卡片
         {
-            int currentEnergy = Toggle.Instance.progress.Energy.Get();
+            float currentEnergy = Toggle.Instance.progress.Energy.Get();
             bool isEnergyExhausted = CheckIfEnergyExhausted(currentEnergy);
 
             if (!isEnergyExhausted)
@@ -128,6 +128,8 @@ public class NextStep : MonoBehaviour
                 if (ReturnToCurrentDaySelection())  // 当天还没有完成
                     return; // 如果没有成功返回当天，则会继续下面的逻辑
             }
+
+            Debug.Log("准备进入下一天");
 
             // 当天已经完成，需要前往下一天或结束
             Barry_Round.NextBarry();
@@ -224,7 +226,7 @@ public class NextStep : MonoBehaviour
         }
     }
 
-    private bool CheckIfEnergyExhausted(int currentEnergy)
+    private bool CheckIfEnergyExhausted(float currentEnergy)
     {
         return currentEnergy <= 0;
     }

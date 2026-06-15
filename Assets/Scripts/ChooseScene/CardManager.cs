@@ -146,7 +146,7 @@ public class CardManager : MonoBehaviour
     /// <summary>
     /// 获取指定回合的随机卡牌列表（共3张，且精力消耗在 energy 之内，且必须满足前置条件，不用去重）
     /// </summary>
-    public List<CardData> GetRandomCard(int round, int barry, int energy)
+    public List<CardData> GetRandomCard(int round, int barry, float energy)
     {
         List<CardData> result = new List<CardData>();
 
@@ -156,16 +156,21 @@ public class CardManager : MonoBehaviour
         if (IfRoundStable(round))
         {
             rawPool.AddRange(stableRound_CardID[round]);
+            UnityEngine.Debug.Log($"当前回合{round}为固有牌回合");
         }
         else
         {
             rawPool.AddRange(normalCard);
+            UnityEngine.Debug.Log($"当前回合{round}为普牌牌回合");
         }
 
         if (IfBarryOnly(barry))
         {
             rawPool.AddRange(onlyBarry_CardID[barry]);
+            UnityEngine.Debug.Log($"当前天数{barry}为仅有天数");
         }
+
+        UnityEngine.Debug.Log($"rawPool的卡牌数为{rawPool.Count}");
 
         // 2. 【核心修改】双重过滤：同时筛选 精力消耗 与 前置条件
         List<int> filteredPool = new List<int>();
@@ -174,8 +179,8 @@ public class CardManager : MonoBehaviour
             CardData card = cardDataList[cardId];
 
             // 检查一：精力是否足够 (绝对值 <= 当前可用精力)
-            int cost = Mathf.Abs(card.energyCost);
-            bool isEnergyEnough = cost <= energy;
+            float cost = Mathf.Abs(card.energyCost);
+            bool isEnergyEnough = (cost <= energy);
 
             // 检查二：前置条件是否满足
             bool isConditionMet = CheckCondition(card);
@@ -211,6 +216,8 @@ public class CardManager : MonoBehaviour
 
             // 由于你明确要求不用去重，这里不需要 Remove，同一张牌可能重复出现
         }
+
+        UnityEngine.Debug.Log($"result有{result.Count}张牌");
 
         return result;
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -10,9 +11,9 @@ public class ProgressBar : MonoBehaviour
     public struct BarValue
     {
         public TextMeshProUGUI BarText;
-        public int Ini;
-        public int Max;
-        private int cur;
+        public float Ini;
+        public float Max;
+        private float cur;
         public string Addition;
 
         public void Initialize()
@@ -20,10 +21,11 @@ public class ProgressBar : MonoBehaviour
             cur = Ini;
             apply();
         }
-        public int Get() => cur;
-        public int Change(int delta)
+        public float Get() => cur;
+        public float Change(float delta)
         {
-            cur = Mathf.Clamp(cur + delta, 0, Max);
+            float rawCur = Mathf.Clamp(cur + delta, 0, Max);
+            cur = (float)Math.Round(rawCur, 2, MidpointRounding.AwayFromZero);
             apply();
             return cur;
         }
