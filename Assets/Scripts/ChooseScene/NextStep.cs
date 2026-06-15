@@ -331,7 +331,7 @@ public class NextStep : MonoBehaviour
 
     private void ToGameOverScene()
     {
-        Debug.Log("检测到黑幕点击，正在切往 GameOverScence...");
+        Debug.Log($"检测到黑幕点击，正在切往 {GameOverScene}...");
         SceneManager.LoadScene(GameOverScene);
     }
 }

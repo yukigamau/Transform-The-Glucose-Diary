@@ -17,6 +17,11 @@ public class GameOverCheck : MonoBehaviour
         public bool Got;    // 是否获得
         public string Comment;  // 评论
 
+        public string Updater;  // 达成结局用的升级事件的名称
+        public int UpLevel;  // 达成结局需要触发升级事件的次数
+        public int CurCnt;   // 当前升级事件的触发次数
+        public bool Finish;  // 是否完成升级事件对应的结局
+
         public bool Check(string EventName)
         {
             if (EventName == Event)
@@ -25,11 +30,24 @@ public class GameOverCheck : MonoBehaviour
                 if (Cnt >= Level)
                 {
                     Got = true;
+                    Debug.Log($"{Achieve}已达成");
                     return true;
                 }
             }
 
             return false;
+        }
+
+        public bool UpCheck(string EventName)
+        {
+            if(EventName == Updater)
+            {
+                CurCnt++;
+                if (CurCnt >= UpLevel)
+                    Finish = true;
+            }
+
+            return Finish;
         }
     }
 
@@ -132,22 +150,27 @@ public class GameOverCheck : MonoBehaviour
         
     }
 
+    // 选卡后对结局的判断
     public bool Chosen(string title)
     {
-        for(int i = 0; i< conditions.Count; i++)
+        foreach (Condition condition in conditions)
         {
-            // 达成特殊结局
-            if (conditions[i].Check(title) && conditions[i].Got)
-            {
-                OverTitle = conditions[i].Achieve + "\n";
-                OverTitle += $"你完成了{conditions[i].Level}次{conditions[i].Event}\n";
-                OverTitle += $"达成了{conditions[i].Name}，并完成了{title}";
-
-                return true;
-            }
+            condition.Check(title);
         }
 
-        return false;
+        // 判断特殊结局
+        foreach (Condition condition in conditions)
+        {
+            if(condition.UpCheck(title))
+            {
+                OverTitle = condition.Achieve + "\n";
+                OverTitle += $"你完成了{condition.Level}次{condition.Event}\n";
+                OverTitle += $"达成了{condition.Name}，并完成了{title}";
+            }
+
+        }
+
+        return OverTitle != "";
     }
 
     // 是否结束

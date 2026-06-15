@@ -133,9 +133,13 @@ public class CardManager : MonoBehaviour
         foreach(GameOverCheck.Condition condition in GameOverCheck.Instance.conditions)
         {
             if (condition.Name == cardData.condition && condition.Got)
+            {
+                UnityEngine.Debug.Log($"{cardData.name}可以使用");
                 return true;
+            }
         }
 
+        UnityEngine.Debug.Log($"{cardData.name}不可使用");
         return false;
     }
 

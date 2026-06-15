@@ -1840,7 +1840,7 @@ MonoBehaviour:
   textStayTime: 0.5
   fadeOutTime: 0.5
   over: 0
-  GameOverScene: StartScene
+  GameOverScene: GameOvertScene
   finalImage: {fileID: 139855018}
   audioSource: {fileID: 859809659}
   turnToNextDayAudio: {fileID: 735868762}
@@ -2401,6 +2401,10 @@ MonoBehaviour:
     Achieve: "\u4FC3\u878D\u5171\u7ADE"
     Got: 0
     Comment: "\u5DF2\u8FBE\u6210\u957F\u8DD1\u9AD8\u624B\uFF08\u5B8C\u62103\u6B21\u957F\u8DD1\uFF09"
+    Updater: "\u9A6C\u62C9\u677E\u6311\u6218"
+    UpLevel: 1
+    CurCnt: 0
+    Finish: 0
   Cooker:
     Cnt: 0
     Level: 3
@@ -2409,6 +2413,10 @@ MonoBehaviour:
     Achieve: "\u5730\u72F1\u53A8\u623F"
     Got: 0
     Comment: "\u5DF2\u8FBE\u6210\u53A8\u827A\u5927\u5E08\uFF08\u5B8C\u6210\u4E09\u6B21\u4E0B\u53A8\u3010\u5065\u5EB7\u98DF\u54C1\u3011\uFF09"
+    Updater: "\u4E0B\u53A8\uFF08\u7CBE\u81F4\u5065\u5EB7\u9910\uFF09"
+    UpLevel: 3
+    CurCnt: 0
+    Finish: 0
   Guitar:
     Cnt: 0
     Level: 3
@@ -2417,6 +2425,10 @@ MonoBehaviour:
     Achieve: "\u5409\u4ED6\u624B"
     Got: 0
     Comment: "\u5DF2\u8FBE\u6210\u5409\u4ED6\u624B\uFF08\u5B8C\u6210\u4E09\u6B21\u7EC3\u4E60\u5409\u4ED6\uFF09"
+    Updater: "\u5BB6\u5EAD\u8868\u6F14"
+    UpLevel: 1
+    CurCnt: 0
+    Finish: 0
   conditions: []
   EatMuch:
     HealthCondition: 10
