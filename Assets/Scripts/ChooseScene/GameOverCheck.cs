@@ -176,14 +176,6 @@ public class GameOverCheck : MonoBehaviour
     // 是否结束
     public bool IfOver(int health, int mood)
     {
-        // 至少要完成10局
-        // 在判定IfOver时，已经完成了Barry的增加，所以Barry是下一天的
-        if (Barry_Round.Barry <= 10)
-            return false;
-
-        if (OverTitle != "")
-            return true;
-
         // 基于数值的普通结果
         for (int i = 0; i < attributes.Count; i++)
         {
@@ -193,6 +185,14 @@ public class GameOverCheck : MonoBehaviour
                 return true;
             }
         }
+
+        // 至少要完成10局
+        // 在判定IfOver时，已经完成了Barry的增加，所以Barry是下一天的
+        if (Barry_Round.Barry <= 10)
+            return false;
+
+        if (OverTitle != "")
+            return true;
 
         return false;
     }
