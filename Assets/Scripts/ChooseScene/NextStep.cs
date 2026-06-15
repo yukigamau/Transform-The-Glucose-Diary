@@ -111,7 +111,9 @@ public class NextStep : MonoBehaviour
                 var titleTransform = obj.GetComponent<Transform>().Find("Title");
                 var textMesh = titleTransform.GetComponent<TextMeshProUGUI>();
                 string text = textMesh.text;
-                GameOverCheck.Instance.Chosen(text);
+                string title = Text.FirstLine(text);
+                Debug.Log($"{title}被处理Chosen");
+                GameOverCheck.Instance.Chosen(title);
 
                 TurnToFlashcard();
             }

@@ -7,7 +7,7 @@ public class GameOverCheck : MonoBehaviour
     public static GameOverCheck Instance;
 
     [System.Serializable]
-    public struct Condition
+    public class Condition
     {
         public int Cnt; // 次数
         public int Level;   // 达成条件
