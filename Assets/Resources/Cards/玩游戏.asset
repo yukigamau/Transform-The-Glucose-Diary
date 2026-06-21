@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7be5711f2dcf2e4d85c05ae3b75773b, type: 3}
+  m_Name: "\u73A9\u6E38\u620F"
+  m_EditorClassIdentifier: 
+  actionName: "\u73A9\u6E38\u620F"
+  level: "\u767D"
+  actionType: "\u5A31\u4E50"
+  actionScene: "\u5367\u5BA4"
+  energyCost: -2
+  healthEffect: -0.1
+  moodEffect: 0.5
+  condition: 0
+  cardDescription: normal
+  bubbleText: "\u6253\u5F00\u6E38\u620F\u673A\u6C89\u6D78\u5728\u865A\u62DF\u4E16\u754C\uFF0C\u4E0D\u7528\u60F3\u80F0\u5C9B\u7D20\u3001\u4E0D\u7528\u7B97\u78B3\u6C34\uFF0C\u5F7B\u5E95\u653E\u7A7A\u2026\u2026"
+  knowledgeText: "\u9002\u5EA6\u6E38\u620F\u53EF\u51CF\u538B\uFF0C\u4F46\u6CE8\u610F\u4E0D\u8981\u4E45\u5750\uFF0C\u6BCF30\u5206\u949F\u8D77\u8EAB\u6D3B\u52A8"
+  stable: 
+  only: 

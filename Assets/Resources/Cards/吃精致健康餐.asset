@@ -17,11 +17,11 @@ MonoBehaviour:
   actionType: "\u8FDB\u98DF"
   actionScene: "\u53A8\u623F"
   energyCost: -1
-  healthEffect: "0.65 + \u5065\u5EB7\u503C * 0.025"
-  moodEffect: 2.8
+  healthEffect: "0.5 + \u5065\u5EB7\u503C * 0.02"
+  moodEffect: "-2 + 0.04 * \u5065\u5EB7\u503C"
   condition: 0
   cardDescription: normal
   bubbleText: "\u975E\u5E38\u7684\u65B0\u9C9C\uFF0C\u975E\u5E38\u7684\u7F8E\u5473\u554A\uFF01\u2026\u2026"
   knowledgeText: "\u575A\u6301\u81EA\u5236\u5747\u8861\u5065\u5EB7\u9910\uFF1A\u6742\u7CAE\u3001\u7EFF\u53F6\u852C\u83DC\u3001\u9E21\u80F8\u8089\u3001\u9C7C\u867E\u3001\u9E21\u86CB\u3001\u65E0\u7CD6\u9178\u5976\u3001\u83CC\u83C7\u3001\u4F4E\u7CD6\u74DC\u679C\uFF0C\u63A7\u7CD6\u63A7\u6CB9\uFF0C\u8840\u7CD6\u5E73\u7A33\uFF0C\u5403\u5B8C\u9971\u8179\u8212\u670D\u65E0\u8D1F\u62C5"
-  stable: 0300000006000000
+  stable: 0400000009000000
   only: 

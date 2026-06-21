@@ -21,7 +21,6 @@ public class CardManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // 确保全局唯一且跨场景不销毁（视需求而定）
         }
         else
         {
@@ -170,8 +169,6 @@ public class CardManager : MonoBehaviour
             UnityEngine.Debug.Log($"当前天数{barry}为仅有天数");
         }
 
-        UnityEngine.Debug.Log($"rawPool的卡牌数为{rawPool.Count}");
-
         // 2. 【核心修改】双重过滤：同时筛选 精力消耗 与 前置条件
         List<int> filteredPool = new List<int>();
         foreach (int cardId in rawPool)
@@ -192,13 +189,13 @@ public class CardManager : MonoBehaviour
             }
         }
 
-        // 🛑 防御性兜底：如果过滤后的卡池为空，说明没有任何一张卡满足条件
+        // 防御性兜底：如果过滤后的卡池为空，说明没有任何一张卡满足条件
         if (filteredPool.Count == 0)
         {
             UnityEngine.Debug.LogWarning($"礼貌警告 ⚠️: 天数 {barry} | 回合 {round} | 精力 {energy} 时，" +
                                          $"过滤出的合法卡池为空！(可能是精力耗尽或前置条件把卡滤光了)");
 
-            // 💡 脱困策略：如果完全没有合法卡牌，直接返回一个空列表，
+            // 脱困策略：如果完全没有合法卡牌，直接返回一个空列表，
             // 这样你的上层控制器（如 Toggle）收到空列表后，就能立刻识别并触发“过天(TurnToNextDay)”或“结算(FianlGame)”
             return result;
         }

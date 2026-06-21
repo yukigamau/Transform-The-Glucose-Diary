@@ -77,9 +77,10 @@ public class NextStep : MonoBehaviour
         if (finalImage != null) finalImage.SetActive(false); // 💡 新增：开局确保结算图关闭
 
         // 游戏刚启动第一天：初始化选项并直接强制开场黑幕转场
-        Barry_Round.Ini();
         Toggle.Instance.IniOptions();
         StartDayTransition($"第 {Barry_Round.Barry} 天", isStartImmediate: true);
+
+        Random.InitState((int)System.DateTime.Now.Ticks);
     }
 
     void OnNextButtonClick()
@@ -120,7 +121,7 @@ public class NextStep : MonoBehaviour
         }
         else // 知识卡片
         {
-            float currentEnergy = Toggle.Instance.progress.Energy.Get();
+            float currentEnergy = Barry_Round.Energy.Get();
             bool isEnergyExhausted = CheckIfEnergyExhausted(currentEnergy);
 
             if (!isEnergyExhausted)
@@ -135,8 +136,8 @@ public class NextStep : MonoBehaviour
             Barry_Round.NextBarry();
 
             if (GameOverCheck.Instance.IfOver
-                (Toggle.Instance.progress.Health.Get(),
-                Toggle.Instance.progress.Mood.Get()))
+                (Barry_Round.Health.Get(),
+                Barry_Round.Mood.Get()))
                 FinalGame();
             else if (Barry_Round.IfFinishBarries())
                 FinalGame();    // 完成所有天数
@@ -176,7 +177,7 @@ public class NextStep : MonoBehaviour
             buttonText.text = originalText;
             ifChoose = true;
 
-            Toggle.Instance.progress.Energy.Initialize();
+            Barry_Round.Energy.Initialize();
             Toggle.Instance.IniOptions();
             if (finalImage != null) finalImage.SetActive(false); // 安全防范
         });
@@ -195,8 +196,8 @@ public class NextStep : MonoBehaviour
     {
         PlayFinalSound();
 
-        GameOverCheck.Instance.AdjustOverTitle(Toggle.Instance.progress.Health.Get(),
-            Toggle.Instance.progress.Mood.Get());
+        GameOverCheck.Instance.AdjustOverTitle(Barry_Round.Health.Get(),
+            Barry_Round.Mood.Get());
 
         string endText = GameOverCheck.Instance.OverTitle;
         Debug.Log($"[游戏结束文本测试]: {endText}");

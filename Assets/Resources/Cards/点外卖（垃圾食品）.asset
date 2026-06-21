@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionName: "\u70B9\u5916\u5356\uFF08\u5783\u573E\u98DF\u54C1\uFF09"
   level: "\u767D"
-  actionType: "\u4E0B\u53A8"
+  actionType: "\u8FDB\u98DF"
   actionScene: "\u53A8\u623F"
   energyCost: 0
   healthEffect: 0
@@ -23,5 +23,5 @@ MonoBehaviour:
   cardDescription: normal
   bubbleText: "\u61D2\u5F97\u505A\u996D\u4E86\u2026\u2026"
   knowledgeText: "\u9891\u7E41\u70B9\u5916\u5356\uFF0C\u9AD8\u6CB9\u9AD8\u7CD6\u9AD8\u76D0\u6613\u9020\u6210\u8840\u7CD6\u6CE2\u52A8\uFF0C\u52A0\u91CD\u8EAB\u4F53\u4EE3\u8C22\u8D1F\u62C5"
-  stable: 0000000004000000
+  stable: 0000000005000000
   only: 

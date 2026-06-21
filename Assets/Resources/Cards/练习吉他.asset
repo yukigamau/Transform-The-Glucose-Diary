@@ -18,7 +18,7 @@ MonoBehaviour:
   actionScene: "\u5367\u5BA4"
   energyCost: -2
   healthEffect: 0
-  moodEffect: 0.8
+  moodEffect: 0.4
   condition: 0
   cardDescription: normal
   bubbleText: "\u7EC3\u5409\u4ED6\u6216\u8BB8\u80FD\u77ED\u6682\u5FD8\u8BB0\u8840\u7CD6\u5E26\u6765\u7684\u7126\u8651\u2026\u2026"

@@ -120,7 +120,6 @@ public class GameOverCheck : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     // Start is called before the first frame update

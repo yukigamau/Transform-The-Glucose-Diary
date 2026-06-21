@@ -17,11 +17,11 @@ MonoBehaviour:
   actionType: "\u4E0B\u53A8"
   actionScene: "\u53A8\u623F"
   energyCost: -1
-  healthEffect: 0.05
+  healthEffect: 0.25
   moodEffect: 0
   condition: 0
   cardDescription: normal
   bubbleText: "\u53C8\u8981\u5403\u6BEB\u65E0\u98DF\u6B32\u7684\u9E21\u80F8\u8089\u5417\u2026\u2026"
   knowledgeText: "\u575A\u6301\u4EB2\u81EA\u4E0B\u53A8\uFF0C\u53EF\u63A7\u6CB9\u76D0\u7CD6\u6444\u5165\uFF0C\u5E73\u7A33\u9910\u540E\u8840\u7CD6\uFF0C\u51CF\u5C11\u70ED\u91CF\u8D85\u6807"
-  stable: 0000000004000000
+  stable: 0000000005000000
   only: 

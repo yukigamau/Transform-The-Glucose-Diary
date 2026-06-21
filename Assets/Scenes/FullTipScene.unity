@@ -331,6 +331,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 346351026}
   m_CullTransparentMesh: 1
+--- !u!1 &447113023 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 788999839058359270, guid: cf1d7605363a24f4dae29e89f48ee4e1, type: 3}
+  m_PrefabInstance: {fileID: 274134227658080330}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &481133942
 GameObject:
   m_ObjectHideFlags: 0
@@ -603,6 +608,16 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &940701558 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5052752848108573836, guid: cf1d7605363a24f4dae29e89f48ee4e1, type: 3}
+  m_PrefabInstance: {fileID: 274134227658080330}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1240019030 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1737828694898989254, guid: cf1d7605363a24f4dae29e89f48ee4e1, type: 3}
+  m_PrefabInstance: {fileID: 274134227658080330}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1803744614
 GameObject:
   m_ObjectHideFlags: 0
@@ -917,13 +932,35 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5052752848108573836, guid: cf1d7605363a24f4dae29e89f48ee4e1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 274134227658080332}
   m_SourcePrefab: {fileID: 100100000, guid: cf1d7605363a24f4dae29e89f48ee4e1, type: 3}
 --- !u!224 &274134227658080331 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3865976258700420674, guid: cf1d7605363a24f4dae29e89f48ee4e1, type: 3}
   m_PrefabInstance: {fileID: 274134227658080330}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &274134227658080332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940701558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78da189adc92f7e4aa29f12ba0466451, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textMoveOffset: -50
+  textFadeDuration: 0.5
+  delayBetweenLines: 0.2
+  gameObjects:
+  - {fileID: 1240019030}
+  - {fileID: 447113023}
+  currentState: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

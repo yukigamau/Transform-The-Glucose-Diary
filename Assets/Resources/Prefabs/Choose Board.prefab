@@ -32,8 +32,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 8939465124426297518}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.75}
-  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.2}
+  m_AnchorMax: {x: 0.5, y: 0.3}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u5403\u5065\u5EB7\u98DF\u54C1"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: cde5f635914e9ef4bbb45d5c5f2645a4, type: 2}
-  m_sharedMaterial: {fileID: 5415860901771336608, guid: cde5f635914e9ef4bbb45d5c5f2645a4, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: e1a5f203e8a5e8541b00623fc8a04952, type: 2}
+  m_sharedMaterial: {fileID: 9202187971059713243, guid: e1a5f203e8a5e8541b00623fc8a04952, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -166,7 +166,7 @@ RectTransform:
   - {fileID: 1245901658578122789}
   m_Father: {fileID: 8939465124426297518}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.35}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
@@ -494,7 +494,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 150, y: 250}
+  m_Size: {x: 180, y: 250}
   m_EdgeRadius: 0
 --- !u!1 &7340967383016955723
 GameObject:
@@ -563,8 +563,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u7CBE\u529B\u503C-2\n\u5065\u5EB7\u503C+5\n\u5FC3\u60C5\u503C-2"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: cde5f635914e9ef4bbb45d5c5f2645a4, type: 2}
-  m_sharedMaterial: {fileID: 5415860901771336608, guid: cde5f635914e9ef4bbb45d5c5f2645a4, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: e1a5f203e8a5e8541b00623fc8a04952, type: 2}
+  m_sharedMaterial: {fileID: 9202187971059713243, guid: e1a5f203e8a5e8541b00623fc8a04952, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -594,7 +594,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 1024
   m_textAlignment: 65535

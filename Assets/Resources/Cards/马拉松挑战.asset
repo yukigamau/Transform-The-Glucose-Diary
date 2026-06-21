@@ -16,7 +16,7 @@ MonoBehaviour:
   level: "\u91D1"
   actionType: "\u8FD0\u52A8"
   actionScene: "\u6237\u5916"
-  energyCost: -4
+  energyCost: -7
   healthEffect: "-3.5 + \u5065\u5EB7\u503C * 0.06"
   moodEffect: "MIN(-3 + \u5065\u5EB7\u503C * 0.1 , 5)"
   condition: "\u957F\u8DD1\u9AD8\u624B"

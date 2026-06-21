@@ -42,7 +42,7 @@ public class CardData : ScriptableObject
         if (cardDescription == "normal")
             effectString = $"精力值{energyCost:+#;-#;0}\n";
         else
-            effectString = $"精力值{-10}（结束今天）\n";
+            effectString = $"精力值{Barry_Round.Energy.Get()}（结束今天）\n";
 
         float healthCost = FormulaCalculator.EvaluateFormula(healthEffect, "健康值", healthValue);
         effectString += $"健康值{healthCost:+0.00;-0.00;0}\n";

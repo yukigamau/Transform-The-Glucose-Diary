@@ -19,20 +19,23 @@ public class Toggle : MonoBehaviour
     public TextMeshProUGUI Comment;
     private List<List<float>> delta;
 
-    public ProgressBar progress;
+    [Header("用于初始Barry_Round")]
+    public TextMeshProUGUI health;
+    public TextMeshProUGUI mood;
+    public TextMeshProUGUI energy;
 
     void Awake()
     {
         Instance = this;
         comments = new List<string>();
         cards = new List<CardData>();
+
+        Comment.text = "";
+        Barry_Round.Ini(health, mood, energy);
     }
 
     void Start()
     {
-        Comment.text = "";
-
-        Barry_Round.Ini();
     }
 
     // 💡 核心中央控制函数：当某个对象被点击时调用
@@ -98,11 +101,11 @@ public class Toggle : MonoBehaviour
         var cardManager = CardManager.Instance;
         cards.Clear();
         cards = cardManager.GetRandomCard(round: Barry_Round.Round, barry: Barry_Round.Barry,
-            energy: progress.Energy.Get());
+            energy: Barry_Round.Energy.Get());
 
         if (cards.Count == 0)
         {
-            Debug.Log($"没有可以抽取的卡。精力值：{progress.Energy.Get()}");
+            Debug.Log($"没有可以抽取的卡。精力值：{Barry_Round.Energy.Get()}");
             return false;
         }
 
@@ -129,7 +132,7 @@ public class Toggle : MonoBehaviour
             TextMeshProUGUI effectText = txtEffectTrans.GetComponent<TextMeshProUGUI>();
 
             titleText.text = card.actionName;
-            effectText.text = card.EffectToString(progress.Health.Get());
+            effectText.text = card.EffectToString(Barry_Round.Health.Get());
 
             // 改动卡片
             ChangeCard(obj, card);
@@ -167,9 +170,9 @@ public class Toggle : MonoBehaviour
         TextMeshProUGUI textMeshProUGUI = effectTrans.GetComponent<TextMeshProUGUI>();
         string text = textMeshProUGUI.text;
         var delta = NumberExtractor.GetThreeNumbers(text);
-        progress.Energy.Change(delta[0]);
-        progress.Health.Change(delta[1]);
-        progress.Mood.Change(delta[2]);
+        Barry_Round.Energy.Change(delta[0]);
+        Barry_Round.Health.Change(delta[1]);
+        Barry_Round.Mood.Change(delta[2]);
     }
 
     void ChangeCard(GameObject obj, CardData card)

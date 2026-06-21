@@ -10,7 +10,7 @@ public class UIMover : MonoBehaviour
     [Header("需要显示的文本列表（按顺序放）")]
     public List<TextMeshProUGUI> identifyText;
 
-    public float initialSpeed = 10f;
+    public float initialSpeed = 20f;
     public float acceleration = 200f;
 
     [Header("文本动画设置")]
@@ -32,6 +32,8 @@ public class UIMover : MonoBehaviour
 
     private List<Vector3> originalPositions = new List<Vector3>();
     private Coroutine textAnimCoroutine; // 记录协程引用，方便随时掐断
+
+    public bool ifMove = false;
 
     void Start()
     {
@@ -66,6 +68,9 @@ public class UIMover : MonoBehaviour
 
     void Update()
     {
+        if (!ifMove)
+            return;
+
         // 核心：每帧检测鼠标左键点击
         if (Input.GetMouseButtonDown(0))
         {
