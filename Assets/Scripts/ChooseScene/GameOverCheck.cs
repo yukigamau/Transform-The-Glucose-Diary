@@ -191,6 +191,9 @@ public class GameOverCheck : MonoBehaviour
             }
         }
 
+        if (Normal.Comein(health, mood))
+            return false;
+
         // 至少要完成10局
         // 在判定IfOver时，已经完成了Barry的增加，所以Barry是下一天的
         if (Barry_Round.Barry <= 10)
@@ -205,6 +208,9 @@ public class GameOverCheck : MonoBehaviour
     // 如果没有OverTitle，则寻找常规结果
     public void AdjustOverTitle(float health, float mood)
     {
+        if (Normal.Comein(health, mood))
+            OverTitle = Normal.GetOverTitle();
+
         if (OverTitle == "")
             foreach (Final f in fianls)
                 if (f.Comein(health, mood))
