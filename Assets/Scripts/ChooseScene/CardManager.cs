@@ -133,12 +133,10 @@ public class CardManager : MonoBehaviour
         {
             if (condition.Name == cardData.condition && condition.Got)
             {
-                UnityEngine.Debug.Log($"{cardData.name}可以使用");
                 return true;
             }
         }
 
-        UnityEngine.Debug.Log($"{cardData.name}不可使用");
         return false;
     }
 
@@ -169,7 +167,7 @@ public class CardManager : MonoBehaviour
             UnityEngine.Debug.Log($"当前天数{barry}为仅有天数");
         }
 
-        // 2. 【核心修改】双重过滤：同时筛选 精力消耗 与 前置条件
+        // 2. 双重过滤：同时筛选 精力消耗 与 前置条件
         List<int> filteredPool = new List<int>();
         foreach (int cardId in rawPool)
         {
@@ -189,14 +187,14 @@ public class CardManager : MonoBehaviour
             }
         }
 
+        UnityEngine.Debug.Log($"filteredPool有{filteredPool.Count}张牌");
+
         // 防御性兜底：如果过滤后的卡池为空，说明没有任何一张卡满足条件
         if (filteredPool.Count == 0)
         {
             UnityEngine.Debug.LogWarning($"礼貌警告 ⚠️: 天数 {barry} | 回合 {round} | 精力 {energy} 时，" +
                                          $"过滤出的合法卡池为空！(可能是精力耗尽或前置条件把卡滤光了)");
 
-            // 脱困策略：如果完全没有合法卡牌，直接返回一个空列表，
-            // 这样你的上层控制器（如 Toggle）收到空列表后，就能立刻识别并触发“过天(TurnToNextDay)”或“结算(FianlGame)”
             return result;
         }
 
@@ -214,8 +212,20 @@ public class CardManager : MonoBehaviour
             // 由于你明确要求不用去重，这里不需要 Remove，同一张牌可能重复出现
         }
 
-        UnityEngine.Debug.Log($"result有{result.Count}张牌");
+        foreach(CardData cardData in result)
+        {
+            string conditionStr = cardData.condition;
+            foreach(GameOverCheck.Condition condition in GameOverCheck.Instance.conditions)
+            {
+                // 重置以控制抽到此卡的频率
+                // 但不能在选卡时重置
+                // 以防做饭吃不到（需要3张卡）
+                if (condition.Name == conditionStr)
+                    condition.Got = false;
+            }
+        }
 
+        UnityEngine.Debug.Log($"GetRandomCard运行到了最后\nResult返回{result.Count}");
         return result;
     }
 }

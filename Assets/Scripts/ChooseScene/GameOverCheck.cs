@@ -11,9 +11,9 @@ public class GameOverCheck : MonoBehaviour
     {
         public int Cnt; // 次数
         public int Level;   // 达成条件
-        public string Name; // 名字
-        public string Event;    // 事件
-        public string Achieve;  // 成就
+        public string Name; // 前置条件名字
+        public string Event;    // 事件（达成此条件所需的事件）
+        public string Achieve;  // 成就名字
         public bool Got;    // 是否获得
         public string Comment;  // 评论
 
@@ -30,7 +30,7 @@ public class GameOverCheck : MonoBehaviour
                 if (Cnt >= Level)
                 {
                     Got = true;
-                    Debug.Log($"{Achieve}已达成");
+                    Debug.Log($"{EventName}触发了{Name}的实现");
                     return true;
                 }
             }
@@ -55,6 +55,10 @@ public class GameOverCheck : MonoBehaviour
     public Condition LongRuner;
     public Condition Cooker;
     public Condition Guitar;
+    public Condition Takeaway;
+    public Condition UsualFood;
+    public Condition HealthyFood;
+    public Condition CandidateFood;
     [Header("动态处理")]
     public List<Condition> conditions;
 
@@ -129,6 +133,10 @@ public class GameOverCheck : MonoBehaviour
         conditions.Add(LongRuner);
         conditions.Add(Cooker);
         conditions.Add(Guitar);
+        conditions.Add(Takeaway);
+        conditions.Add(UsualFood);
+        conditions.Add(HealthyFood);
+        conditions.Add(CandidateFood);
 
         attributes = new List<Attribute>();
         attributes.Add(EatMuch);

@@ -5,9 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class NewGame : MonoBehaviour
 {
-    public string openingScene;
+    public string difficultyScene = "DifficultyScene";
     public AudioSource audioSource;
-    public UIMover uiMover;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +34,6 @@ public class NewGame : MonoBehaviour
         yield return new WaitForSeconds(audioSource.clip.length);
 
         // 3. 执行转场
-        uiMover.ifMove = true;
+        SceneManager.LoadScene(difficultyScene);
     }
 }

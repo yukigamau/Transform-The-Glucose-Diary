@@ -10,7 +10,7 @@ public class UIMover : MonoBehaviour
     [Header("需要显示的文本列表（按顺序放）")]
     public List<TextMeshProUGUI> identifyText;
 
-    public float initialSpeed = 20f;
+    public float initialSpeed = 40f;
     public float acceleration = 200f;
 
     [Header("文本动画设置")]

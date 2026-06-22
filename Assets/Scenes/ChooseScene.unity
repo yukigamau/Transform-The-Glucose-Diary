@@ -850,7 +850,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 13fbe8dd3ad41274293313e1cf4c5642, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 59de51df79a415345a48d2d3b4a39e49, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2455,17 +2455,65 @@ MonoBehaviour:
     UpLevel: 1
     CurCnt: 0
     Finish: 0
+  Takeaway:
+    Cnt: 0
+    Level: 1
+    Name: "\u70B9\u5916\u5356\uFF08\u5783\u573E\u98DF\u54C1\uFF09"
+    Event: "\u70B9\u5916\u5356\uFF08\u5783\u573E\u98DF\u54C1\uFF09"
+    Achieve: "\u70B9\u5916\u5356\uFF08\u5783\u573E\u98DF\u54C1\uFF09 "
+    Got: 0
+    Comment: 
+    Updater: 
+    UpLevel: 0
+    CurCnt: 0
+    Finish: 0
+  UsualFood:
+    Cnt: 0
+    Level: 1
+    Name: "\u4E0B\u53A8\uFF08\u666E\u901A\u98DF\u54C1\uFF09"
+    Event: "\u4E0B\u53A8\uFF08\u666E\u901A\u98DF\u54C1\uFF09"
+    Achieve: "\u4E0B\u53A8\uFF08\u666E\u901A\u98DF\u54C1\uFF09"
+    Got: 0
+    Comment: 
+    Updater: 
+    UpLevel: 0
+    CurCnt: 0
+    Finish: 0
+  HealthyFood:
+    Cnt: 0
+    Level: 1
+    Name: "\u4E0B\u53A8\uFF08\u5065\u5EB7\u98DF\u54C1\uFF09"
+    Event: "\u4E0B\u53A8\uFF08\u5065\u5EB7\u98DF\u54C1\uFF09"
+    Achieve: "\u4E0B\u53A8"
+    Got: 0
+    Comment: 
+    Updater: 
+    UpLevel: 0
+    CurCnt: 0
+    Finish: 0
+  CandidateFood:
+    Cnt: 0
+    Level: 1
+    Name: "\u4E0B\u53A8\uFF08\u505A\u7CBE\u81F4\u5065\u5EB7\u9910\uFF09"
+    Event: "\u4E0B\u53A8\uFF08\u505A\u7CBE\u81F4\u5065\u5EB7\u9910\uFF09"
+    Achieve: "\u4E0B\u53A8\uFF08\u505A\u7CBE\u81F4\u5065\u5EB7\u9910\uFF09"
+    Got: 0
+    Comment: 
+    Updater: 
+    UpLevel: 0
+    CurCnt: 0
+    Finish: 0
   conditions: []
   EatMuch:
     HealthCondition: 30
     MoodCondition: 100
     Name: "\u75AF\u72C2\u8FDB\u98DF"
-    Epilogue: "\u4F60\u5403\u5F97\u592A\u4E0D\u5065\u5EB7\u4E86\uFF01\n\u5065\u5EB7\u4F4E\u4E8E10\u2014\u2014\u75AF\u72C2\u8FDB\u98DF"
+    Epilogue: "\u89E6\u53D1\u7ED3\u5C40\uFF1A\u75AF\u72C2\u8FDB\u98DF\n\u4F60\u5403\u5F97\u592A\u4E0D\u5065\u5EB7\u4E86\n\uFF08\u5065\u5EB7\u4F4E\u4E8E30\uFF09"
   Groomy:
     HealthCondition: 100
     MoodCondition: 30
     Name: "\u9ED1\u6697\u4E4B\u62E5"
-    Epilogue: "\u4F60\u9700\u8981\u4FDD\u62A4\u4F60\u7684\u5FC3\n\u5FC3\u7406\u4F4E\u4E8E10\u2014\u2014\u9ED1\u6697\u4E4B\u62E5"
+    Epilogue: "\u89E6\u53D1\u7ED3\u5C40\uFF1A\u9ED1\u6697\u4E4B\u641C\n\u4F60\u9700\u8981\u4FDD\u62A4\u4F60\u7684\u5FC3\n\uFF08\u5FC3\u60C5\u4F4E\u4E8E30\uFF09"
   Normal:
     MinHealth: 30
     MaxHealth: 70
@@ -3595,7 +3643,7 @@ RectTransform:
   m_AnchorMin: {x: 0.05, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 100}
+  m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2013438520
 MonoBehaviour:

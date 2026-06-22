@@ -77,7 +77,7 @@ static public class Barry_Round
     public static void NextBarry()
     {
         Barry++;
-        Round = (int)(Energy.Max - Energy.Get());
+        Round = 0;
     }
 
     public static bool IfFinishBarries()

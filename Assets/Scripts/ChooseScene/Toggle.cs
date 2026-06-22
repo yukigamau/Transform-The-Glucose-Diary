@@ -177,14 +177,14 @@ public class Toggle : MonoBehaviour
 
     void ChangeCard(GameObject obj, CardData card)
     {
-        ChangeTextColor(obj, card);
+        ChangeCardColor(obj, card);
         ChangeBackPhoto(obj, card);
     }
 
-    // 修改卡片标题颜色
-    void ChangeTextColor(GameObject obj, CardData card)
+    // 修改卡片颜色
+    void ChangeCardColor(GameObject obj, CardData card)
     {
-        string name = "Title";
+        string name = "Background";
         Transform textTrans = obj.transform.Find(name);
         if (textTrans == null)
         {
@@ -192,11 +192,12 @@ public class Toggle : MonoBehaviour
             return;
         }
 
-        TextMeshProUGUI text = textTrans.GetComponent<TextMeshProUGUI>();
+        Image image = textTrans.GetComponent<Image>();
+        //TextMeshProUGUI text = textTrans.GetComponent<TextMeshProUGUI>();
         Color black = new Color(0f, 0f, 0f);
-        text.color = card.level switch
+        image.color = card.level switch
         {
-            "白" => black,
+            "白" => new Color32(179, 179, 179, 255),
             "蓝" => new Color32(81, 163, 206, 255),
             "金" => new Color32(255, 208, 0, 255),
             _ => black
@@ -215,16 +216,15 @@ public class Toggle : MonoBehaviour
         // 获取当前图片节点上的 RectTransform 组件
         RectTransform rectTrans = image.GetComponent<RectTransform>();
 
-        // 1. 获取传入的卡牌面板的 RectTransform 宽高
-        RectTransform objRectTrans = toggleObjects[0].GetComponent<RectTransform>();
-        float width = objRectTrans.rect.width;
-        float height = objRectTrans.rect.height;
-        float max = Mathf.Max(width, height);
+        // 1. 获取 Panel 的 RectTransform 尺寸
+        RectTransform panelRect = toggleObjects[0].GetComponent<RectTransform>()
+            .Find("Panel").GetComponent<RectTransform>();
+        float panelWidth = panelRect.rect.width;
+        float panelHeight = panelRect.rect.height;
 
-        // 2. 加载图片（确保你的 Images 文件夹在 Resources 文件夹内部）
-        string photoName = $"Images/卡片{card.actionType}（扣图）";
+        // 2. 加载图片
+        string photoName = $"Images/卡图/{card.name}";
         Sprite sprite = Resources.Load<Sprite>(photoName);
-
         if (sprite == null)
         {
             Debug.LogError($"未能加载图片: {photoName}");
@@ -234,11 +234,22 @@ public class Toggle : MonoBehaviour
         // 3. 更换图片
         image.sprite = sprite;
 
-        // 4. 正确修改 UI 的长宽为 max (使用 sizeDelta 赋值)
-        rectTrans.sizeDelta = new Vector2(max, max);
+        // 4. 获取图片原始尺寸
+        float spriteWidth = sprite.rect.width;
+        float spriteHeight = sprite.rect.height;
 
-        // 💡 额外建议：由于你把长宽都强行设为了 max（变成了正方形），
-        // 如果原图不是正方形，建议开启保持比例，防止图片被拉伸变形
-        image.preserveAspect = true;
+        // 5. 计算缩放比例，取最大值以保证完全覆盖 Panel
+        float scaleX = panelWidth / spriteWidth;
+        float scaleY = panelHeight / spriteHeight;
+        float scale = Mathf.Max(scaleX, scaleY);
+
+        // 6. 设置 Image 的尺寸（缩放后的尺寸）
+        image.rectTransform.sizeDelta = new Vector2(spriteWidth * scale, spriteHeight * scale);
+
+        // 7. 关闭 preserveAspect（必须，因为我们手动控制了尺寸）
+        image.preserveAspect = false;
+
+        // 8. （可选）将图片居中于 Panel，避免偏移
+        image.rectTransform.anchoredPosition = Vector2.zero;
     }
 }
