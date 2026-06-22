@@ -1146,8 +1146,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiObjects:
   - {fileID: 1823233323}
-  - {fileID: 641414623}
-  - {fileID: 1349844574}
+  uiSetNotActive:
+  - {fileID: 641414622}
+  - {fileID: 1349844573}
   identifyText:
   - {fileID: 1105603961}
   - {fileID: 1231912539}

@@ -78,6 +78,8 @@ static public class Barry_Round
     {
         Barry++;
         Round = 0;
+        Health.Change(Difficulty.HealthDelta());
+        Mood.Change(Difficulty.MoodDelta());
     }
 
     public static bool IfFinishBarries()
