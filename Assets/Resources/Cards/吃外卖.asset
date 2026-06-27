@@ -17,8 +17,8 @@ MonoBehaviour:
   actionType: "\u8FDB\u98DF"
   actionScene: "\u53A8\u623F"
   energyCost: -1
-  healthEffect: "-1 + \u5065\u5EB7\u503C * 0.015"
-  moodEffect: "MAX(4 - \u5065\u5EB7\u503C * 0.05 , 1)"
+  healthEffect: "-1 + \u5065\u5EB7\u503C * 0.005"
+  moodEffect: "MIN(-3 + \u5065\u5EB7\u503C * 0.05 , -1)"
   condition: "\u70B9\u5916\u5356\uFF08\u5783\u573E\u98DF\u54C1\uFF09"
   cardDescription: normal
   bubbleText: "\u660E\u77E5\u5916\u5356\u91CD\u6CB9\u9AD8\u7CD6\uFF0C\u8FD8\u662F\u5FCD\u4E0D\u4F4F\u70B9\u4E86\uFF0C\u5403\u5B8C\u53EA\u5269\u6EE1\u5FC3\u6127\u759A\u4E0E\u4E0D\u5B89\u2026\u2026"

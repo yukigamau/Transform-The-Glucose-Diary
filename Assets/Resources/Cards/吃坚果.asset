@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: "\u5403\u575A\u679C"
   m_EditorClassIdentifier: 
   actionName: "\u5403\u575A\u679C"
-  level: "\u767D"
+  level: "\u84DD"
   actionType: "\u8FDB\u98DF"
   actionScene: "\u53A8\u623F"
   energyCost: 0
-  healthEffect: 0.06
-  moodEffect: 0.1
+  healthEffect: 0.08
+  moodEffect: 0.15
   condition: 0
   cardDescription: normal
   bubbleText: "\u6570\u4E86\u51E0\u9897\u6838\u6843\u674F\u4EC1\u6162\u6162\u56BC\uFF0C\u575A\u679C\u7684\u6CB9\u8102\u9999\u6C14\u8BA9\u4EBA\u6EE1\u8DB3\u53C8\u5B89\u5FC3\u2026\u2026"

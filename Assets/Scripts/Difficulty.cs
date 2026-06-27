@@ -24,17 +24,17 @@ public static class Difficulty
 
     public static float HealthDelta()
     {
-        // MIN(健康值*(0.03+ 0.002*进阶等级 , 1 + 进阶等级* 0.1)
+        // MIN(健康值*(0.01+ 0.002*进阶等级) , 0.2 + 进阶等级* 0.07)
         float health = Barry_Round.Health.Get();
-        float delta = Mathf.Min(health * 0.03f + 0.002f * Cur, 1f + Cur * 0.1f);
+        float delta = Mathf.Min(health * (0.01f + 0.0025f * Cur), 0.2f + Cur * 0.07f);
         return -delta;
     }
 
     public static float MoodDelta()
     {
-        // MAX(2+进阶等级*0.1 - (心情值 - 40 - 进阶等级)/(30+ 进阶等级) , 2+进阶等级*0.1)
+        // MAX(0.3+进阶等级*0.07 - (心情值 - 35 - 进阶等级)/(40+ 进阶等级) , 0.3+进阶等级*0.07)
         float mood = Barry_Round.Mood.Get();
-        float delta = Mathf.Max(2 + Cur * 0.1f - (mood - 40 - Cur) / (30 + Cur), 2 + Cur * 0.1f);
+        float delta = Mathf.Max(0.3f + Cur * 0.07f - (mood - 35 - Cur) / (40 + Cur), 0.3f + Cur * 0.07f);
         return -delta;
     }
 }

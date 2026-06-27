@@ -17,7 +17,7 @@ MonoBehaviour:
   actionType: "\u4E0B\u53A8"
   actionScene: "\u53A8\u623F"
   energyCost: -4
-  healthEffect: 0.8
+  healthEffect: 0.15
   moodEffect: 2
   condition: "\u53A8\u827A\u5927\u5E08"
   cardDescription: normal
